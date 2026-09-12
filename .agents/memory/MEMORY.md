@@ -1,0 +1,1 @@
+- [Deployment asset paths](deployment-csv-path.md) — local and deployed artifact processes can have different working directories.

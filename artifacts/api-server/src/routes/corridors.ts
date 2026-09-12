@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { Router, type IRouter } from "express";
 import Papa from "papaparse";
@@ -186,7 +186,16 @@ let cachedCorridors: Corridor[] | undefined;
 function loadCorridors(): Corridor[] {
   if (cachedCorridors) return cachedCorridors;
 
-  const csvPath = path.resolve(process.cwd(), "data/corridors.csv");
+  const candidates = [
+    path.resolve(process.cwd(), "data/corridors.csv"),
+    path.resolve(process.cwd(), "artifacts/api-server/data/corridors.csv"),
+  ];
+  const csvPath = candidates.find((candidate) => existsSync(candidate));
+  if (!csvPath) {
+    throw new Error(
+      `Corridor dataset not found. Checked: ${candidates.join(", ")}`,
+    );
+  }
   const csv = readFileSync(csvPath, "utf8");
   const parsed = Papa.parse<RawRow>(csv, {
     header: true,
