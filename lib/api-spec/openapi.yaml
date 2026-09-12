@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: corridors
+    description: Corridor intelligence
 paths:
   /healthz:
     get:
@@ -24,6 +26,58 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /corridors:
+    get:
+      operationId: getCorridors
+      tags: [corridors]
+      summary: List corridor intelligence
+      description: Returns the full Dallas–Fort Worth corridor dataset with calculated location opportunity scores.
+      responses:
+        "200":
+          description: Corridor rows
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Corridor"
+  /corridors/{corridorId}:
+    get:
+      operationId: getCorridor
+      tags: [corridors]
+      summary: Get a corridor profile
+      parameters:
+        - name: corridorId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Corridor profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Corridor"
+        "404":
+          description: Corridor not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /dashboard-summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [corridors]
+      summary: Get executive dashboard summary
+      description: Returns aggregate metrics and highlighted corridors derived from the supplied dataset.
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +87,141 @@ components:
           type: string
       required:
         - status
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+    Corridor:
+      type: object
+      properties:
+        metro: { type: string }
+        corridor_id: { type: string }
+        legacy_corridor_id: { type: string }
+        corridor_name: { type: string }
+        district: { type: string }
+        level: { type: string }
+        object_form: { type: string }
+        form: { type: string }
+        character: { type: string }
+        dominant_audience: { type: string }
+        gateway_dependency: { type: string }
+        neighborhood_momentum: { type: number }
+        timing_alpha: { type: number }
+        safety_day: { type: number }
+        safety_evening: { type: number }
+        safety_late_night: { type: number }
+        weekday_am: { type: number }
+        weekday_midday: { type: number }
+        weekday_evening: { type: number }
+        late_night: { type: number }
+        weekend_day: { type: number }
+        path_of_travel_friction: { type: number }
+        transit_car_orientation: { type: number }
+        halo_strength: { type: number }
+        chain_dominance: { type: number }
+        cafe_whitespace: { type: number }
+        qsr_whitespace: { type: number }
+        fast_casual_whitespace: { type: number }
+        fitness_whitespace: { type: number }
+        beauty_wellness_whitespace: { type: number }
+        grocery_convenience_whitespace: { type: number }
+        shock_resilience: { type: number }
+        seasonality_amplitude: { type: number }
+        event_dependency: { type: number }
+        development_dependency: { type: number }
+        office_routine: { type: number }
+        hybrid_remote: { type: number }
+        family_household: { type: number }
+        morning_commuters: { type: number }
+        car_errands: { type: number }
+        weekend_brunch: { type: number }
+        young_social_cohort: { type: number }
+        opportunity_score: { type: number }
+        cafe_score: { type: number }
+        qsr_score: { type: number }
+        fast_casual_score: { type: number }
+        fitness_score: { type: number }
+        beauty_wellness_score: { type: number }
+        grocery_convenience_score: { type: number }
+      required:
+        - metro
+        - corridor_id
+        - legacy_corridor_id
+        - corridor_name
+        - district
+        - level
+        - object_form
+        - form
+        - character
+        - dominant_audience
+        - gateway_dependency
+        - neighborhood_momentum
+        - timing_alpha
+        - safety_day
+        - safety_evening
+        - safety_late_night
+        - weekday_am
+        - weekday_midday
+        - weekday_evening
+        - late_night
+        - weekend_day
+        - path_of_travel_friction
+        - transit_car_orientation
+        - halo_strength
+        - chain_dominance
+        - cafe_whitespace
+        - qsr_whitespace
+        - fast_casual_whitespace
+        - fitness_whitespace
+        - beauty_wellness_whitespace
+        - grocery_convenience_whitespace
+        - shock_resilience
+        - seasonality_amplitude
+        - event_dependency
+        - development_dependency
+        - office_routine
+        - hybrid_remote
+        - family_household
+        - morning_commuters
+        - car_errands
+        - weekend_brunch
+        - young_social_cohort
+        - opportunity_score
+        - cafe_score
+        - qsr_score
+        - fast_casual_score
+        - fitness_score
+        - beauty_wellness_score
+        - grocery_convenience_score
+    SummaryHighlight:
+      type: object
+      properties:
+        label: { type: string }
+        corridor_name: { type: string }
+        district: { type: string }
+        value: { type: number }
+        value_label: { type: string }
+      required: [label, corridor_name, district, value, value_label]
+    DashboardSummary:
+      type: object
+      properties:
+        total_corridors: { type: integer }
+        average_cafe_whitespace: { type: number }
+        average_qsr_whitespace: { type: number }
+        average_neighborhood_momentum: { type: number }
+        average_safety: { type: number }
+        highlights:
+          type: array
+          items:
+            $ref: "#/components/schemas/SummaryHighlight"
+      required:
+        - total_corridors
+        - average_cafe_whitespace
+        - average_qsr_whitespace
+        - average_neighborhood_momentum
+        - average_safety
+        - highlights
 

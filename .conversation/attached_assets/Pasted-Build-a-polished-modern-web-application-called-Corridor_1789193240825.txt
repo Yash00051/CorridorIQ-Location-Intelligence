@@ -1,0 +1,344 @@
+Build a polished, modern web application called **CorridorIQ — Smart Location Intelligence**.
+
+The uploaded CSV contains corridor-level behavioral and market intelligence for Dallas–Fort Worth. It is a simplified prototype extracted from a larger demand-atlas dataset.
+
+## GOAL
+
+Create an interactive decision-support platform that helps a business owner or restaurant/café operator answer:
+
+**"Where should I open my next location, and what type of concept is most suitable for that area?"**
+
+The application should turn the dataset into an easy-to-understand visual intelligence dashboard rather than simply displaying raw rows.
+
+## DATA
+
+Use the uploaded CSV as the primary data source.
+
+Each row represents a geographic/business corridor.
+
+Important fields include:
+
+* metro
+* corridor_id
+* legacy_corridor_id
+* corridor_name
+* district
+* level
+* object_form
+* form
+* character
+* dominant_audience
+* gateway_dependency
+* neighborhood_momentum
+* timing_alpha
+* safety_day
+* safety_evening
+* safety_late_night
+* weekday_am
+* weekday_midday
+* weekday_evening
+* late_night
+* weekend_day
+* path_of_travel_friction
+* transit_car_orientation
+* halo_strength
+* chain_dominance
+* cafe_whitespace
+* qsr_whitespace
+* fast_casual_whitespace
+* fitness_whitespace
+* beauty_wellness_whitespace
+* grocery_convenience_whitespace
+* shock_resilience
+* seasonality_amplitude
+* event_dependency
+* development_dependency
+* office_routine
+* hybrid_remote
+* family_household
+* morning_commuters
+* car_errands
+* weekend_brunch
+* young_social_cohort
+
+## CORE FEATURES
+
+### 1. Executive Dashboard
+
+Create a visually impressive landing/dashboard page containing:
+
+* Total corridors
+* Average café whitespace
+* Average QSR whitespace
+* Average neighborhood momentum
+* Average safety score
+* Top opportunity corridor
+* Strongest emerging corridor
+* Best corridor for cafés
+* Best corridor for QSR/fast casual
+
+Use attractive KPI cards and charts.
+
+### 2. Corridor Explorer
+
+Create a searchable and filterable table/card view.
+
+Users should be able to:
+
+* Search by corridor name
+* Filter by district
+* Filter by dominant audience
+* Filter by corridor form
+* Sort by opportunity score
+* Sort by café whitespace
+* Sort by QSR whitespace
+* Sort by neighborhood momentum
+* Sort by safety
+* Sort by development dependency
+
+Each corridor should have a detailed profile page/modal.
+
+### 3. Opportunity Score
+
+Create a transparent calculated score called:
+
+**Location Opportunity Score**
+
+Calculate it from the available data rather than inventing a machine-learning prediction.
+
+Suggested weighted formula:
+
+* 25% relevant whitespace
+* 20% neighborhood momentum
+* 15% safety
+* 15% audience fit
+* 10% daypart demand
+* 10% resilience
+* 5% accessibility
+
+Normalize component values to 0–100.
+
+For café recommendations, give higher weight to `cafe_whitespace`.
+
+For QSR recommendations, give higher weight to `qsr_whitespace`.
+
+For fast-casual recommendations, give higher weight to `fast_casual_whitespace`.
+
+Clearly label this as a **data-derived opportunity score**, not a guaranteed prediction.
+
+### 4. Concept Recommendation
+
+Add a section called:
+
+**"What should I open here?"**
+
+Allow the user to select:
+
+* Café
+* QSR
+* Fast Casual
+* Fitness
+* Beauty & Wellness
+* Grocery / Convenience
+
+Based on the corresponding whitespace score plus audience and behavioral characteristics, rank the corridors.
+
+Show:
+
+**Recommended Concept**
+**Best Corridor**
+**Opportunity Score**
+**Why it fits**
+
+The explanation should reference actual dataset fields.
+
+Example:
+
+"High café whitespace + strong weekend activity + strong family-household audience makes this corridor a promising café candidate."
+
+Do NOT make up facts that aren't represented in the dataset.
+
+### 5. Compare Locations
+
+Allow users to select 2–4 corridors and compare them side-by-side.
+
+Create comparison charts for:
+
+* Opportunity Score
+* Café whitespace
+* QSR whitespace
+* Fast Casual whitespace
+* Neighborhood momentum
+* Safety
+* Weekend activity
+* Weekday activity
+* Chain dominance
+* Development dependency
+* Resilience
+
+Highlight the strongest value in each category.
+
+### 6. Audience Insights
+
+Create an audience visualization showing the strongest audience characteristics for a selected corridor.
+
+Use:
+
+* Office routine
+* Hybrid remote
+* Family household
+* Morning commuters
+* Car errands
+* Weekend brunch
+* Young social cohort
+
+Display these as horizontal bars or radar-style visualization.
+
+### 7. Daypart Analysis
+
+For every corridor show:
+
+* Weekday AM
+* Weekday Midday
+* Weekday Evening
+* Late Night
+* Weekend Day
+
+Use a clean bar chart.
+
+Add a simple interpretation:
+
+**Peak opportunity: Weekend Day**
+
+or
+
+**Peak opportunity: Weekday Midday**
+
+based strictly on the highest available score.
+
+### 8. Opportunity Heatmap
+
+Create a visual matrix of corridors versus:
+
+* Café
+* QSR
+* Fast Casual
+* Fitness
+* Beauty & Wellness
+* Grocery/Convenience
+
+Use the whitespace values to create a heatmap.
+
+This should make underserved categories immediately visible.
+
+### 9. Corridor Detail
+
+When a corridor is selected, show:
+
+* Corridor name
+* District
+* Description/character
+* Dominant audience
+* Opportunity Score
+* Business concept recommendation
+* Behavioral profile
+* Daypart profile
+* Whitespace profile
+* Audience profile
+* Risk/resilience indicators
+
+Create a clean visual "investment snapshot."
+
+### 10. Map
+
+Create a map-style interface if possible.
+
+Since the uploaded prototype CSV does NOT contain latitude/longitude coordinates, do not fabricate coordinates.
+
+Instead, create a visually convincing **corridor intelligence map placeholder** or a district-based visualization.
+
+Clearly indicate that precise H3 geographic mapping can be added later using the original NYC H3 ownership dataset.
+
+## DESIGN
+
+Make the UI look like a professional startup/product used by real estate analysts, restaurant expansion teams and investors.
+
+Style:
+
+* Modern SaaS dashboard
+* Premium but minimal
+* Clean typography
+* Large data visualizations
+* Responsive
+* Desktop-first but mobile-friendly
+* Dark/light professional aesthetic
+* Subtle animations
+* Rounded cards
+* Excellent spacing
+* Strong visual hierarchy
+
+Use charts wherever they communicate information better than tables.
+
+## IMPORTANT DATA RULES
+
+Do NOT invent:
+
+* Revenue
+* Population
+* Exact foot traffic
+* Rent
+* Sales
+* Number of businesses
+* Latitude/longitude
+* Customer counts
+* Market size
+
+Those values are not in this prototype dataset.
+
+Do not call the opportunity score an AI prediction.
+
+Call it:
+
+**Data-Derived Opportunity Score**
+
+The application should make it obvious that the score is calculated from the supplied behavioral/whitespace data.
+
+## DEMO EXPERIENCE
+
+Make the first screen immediately impressive for a hackathon judge.
+
+The dashboard should open with:
+
+**"Find the next high-opportunity location."**
+
+Then show:
+
+1. Overall market snapshot
+2. Top opportunity corridors
+3. Category opportunity heatmap
+4. Audience insights
+5. Compare locations CTA
+
+Include sample interactions and polished empty/loading states.
+
+## TECHNICAL
+
+Build the application using the uploaded CSV.
+
+Parse the CSV client-side if practical.
+
+Create reusable components for:
+
+* KPI cards
+* Corridor cards
+* Charts
+* Filters
+* Comparison table
+* Score badges
+* Detail panels
+
+Keep the code modular and production-quality.
+
+Prioritize a working, visually impressive prototype over unnecessary complexity.
+
+The main purpose is to demonstrate how raw corridor intelligence can be transformed into an actionable location-selection decision tool.

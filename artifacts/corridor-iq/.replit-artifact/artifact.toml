@@ -1,0 +1,28 @@
+kind = "data-app"
+previewPath = "/"
+title = "CorridorIQ — Smart Location Intelligence"
+description = "An interactive Dallas–Fort Worth location intelligence dashboard that turns corridor behavior and whitespace data into transparent, data-derived opportunity recommendations for cafés, QSR, fast casual, fitness, beauty and wellness, and grocery concepts."
+version = "1.0.0"
+id = "artifacts/corridor-iq"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19424
+
+[services.development]
+run = "pnpm --filter @workspace/corridor-iq run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/corridor-iq", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/corridor-iq/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19424"
+BASE_PATH = "/"
